@@ -1,65 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Opciones del proponedor</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 100px;
-        }
-
-        .boton {
-            background-color: green;
-            color: white;
-            padding: 10px 20px;
-            margin: 10px 0;
-            border: none;
-            cursor: pointer;
-            width: 150px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .lista-propuestas {
-        list-style-type: none; /* Elimina las viñetas predeterminadas */
-        padding: 0;
-        text-align: center;
-        display: inline-block; /* Centra la lista en la página */
-    }
-    .lista-propuestas li {
-        margin-bottom: 10px; /* Espacio entre elementos de la lista */
-    }
-    .lista-propuestas a {
-        color: black;
-        text-decoration: none; /* Elimina el subrayado de los enlaces */
-    }
-
-        input[type="text"], input[type="password"] {
-            margin: 10px 0;
-            padding: 10px;
-            width: 300px;
-        }
-
-        h1 {
-            color: black;
-        }
-
-        .error {
-            color: red;
-        }
-    </style>
-</head>
-<body>
 <?php
 session_start();
 
 // Variables de conexión a la base de datos
-$hostname = "127.0.0.1";
-$port = 3307;
-$username = "root";
-$password = "4241640";
-$database = "proyecto";
+$hostname = "localhost";
+$username = "id22374583_carproe3t";
+$password = "carpro-E3T";
+$database = "id22374583_proyecto";
+$port = 21;
 
 // Obtener el ID de la propuesta desde la URL
 $id = isset($_GET['id']) ? $_GET['id'] : null;
@@ -109,30 +56,111 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $sql = "SELECT * FROM proyectos WHERE id = $id";
 $result = $conn->query($sql);
 
-if ($result && $row = $result->fetch_assoc()) {
-    echo "<h1>Editar Propuesta</h1>";
-    echo "<form action='editar_propuesta.php?id=$id' method='post'>";
-    echo "    <label for='nombreProyecto'>Nombre del Proyecto:</label><br>";
-    echo "    <input type='text' id='nombreProyecto' name='nombreProyecto' value='" . htmlspecialchars($row["nombre_proyecto"]) . "' required><br>";
-    echo "    <label for='descripcion'>Descripción:</label><br>";
-    echo "    <textarea id='descripcion' name='descripcion' required>" . htmlspecialchars($row["descripcion"]) . "</textarea><br>";
-    echo "    <label for='numeroEstudiantes'>Número de Estudiantes:</label><br>";
-    echo "    <input type='number' id='numeroEstudiantes' name='numeroEstudiantes' value='" . htmlspecialchars($row["numero_estudiantes"]) . "' required><br>"; 
-    echo "    <label for='emailProfesor'>Email del Profesor:</label><br>";
-    echo "    <input type='email' id='emailProfesor' name='emailProfesor' value='" . htmlspecialchars($row["email_profesor"]) . "' required><br>";
-    echo "    <label for='datosad'>Datos adicionales de contacto:</label><br>";
-    echo "    <textarea id='datosad' name='datosad' required>" . htmlspecialchars($row["datosad"]) . "</textarea><br>";
-    echo "    <label for='disponible'>Disponible:</label><br>";
-    echo "    <input type='checkbox' id='disponible' name='disponible'" . ($row['disponible'] ? " checked" : "") . "><br>";
-    echo "    <input type='submit' value='Guardar Cambios' class='boton'>";
-    echo "    <input type='submit' name='accion' value='Eliminar Propuesta' class='boton' onclick='return confirm(\"¿Estás seguro de que deseas eliminar esta propuesta?\");'>";
-    echo "</form>";
-} else {
-    echo "Propuesta no encontrada.";
-}
-
-$conn->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Propuesta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .boton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .boton:hover {
+            background-color: #45a049;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .input-group input, .input-group textarea {
+            width: calc(100% - 22px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-group textarea {
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <?php
+    if ($result && $row = $result->fetch_assoc()) {
+        echo "<h1>Editar Propuesta</h1>";
+        echo "<form action='editar_propuesta.php?id=$id' method='post'>";
+        echo "<div class='input-group'>";
+        echo "    <label for='nombreProyecto'>Nombre del Proyecto:</label>";
+        echo "    <input type='text' id='nombreProyecto' name='nombreProyecto' value='" . htmlspecialchars($row["nombre_proyecto"]) . "' required>";
+        echo "</div>";
+        echo "<div class='input-group'>";
+        echo "    <label for='descripcion'>Descripción:</label>";
+        echo "    <textarea id='descripcion' name='descripcion' required>" . htmlspecialchars($row["descripcion"]) . "</textarea>";
+        echo "</div>";
+        echo "<div class='input-group'>";
+        echo "    <label for='numeroEstudiantes'>Número de Estudiantes:</label>";
+        echo "    <input type='number' id='numeroEstudiantes' name='numeroEstudiantes' value='" . htmlspecialchars($row["numero_estudiantes"]) . "' required>";
+        echo "</div>";
+        echo "<div class='input-group'>";
+        echo "    <label for='emailProfesor'>Email del Profesor:</label>";
+        echo "    <input type='email' id='emailProfesor' name='emailProfesor' value='" . htmlspecialchars($row["email_profesor"]) . "' required>";
+        echo "</div>";
+        echo "<div class='input-group'>";
+        echo "    <label for='datosad'>Datos adicionales de contacto:</label>";
+        echo "    <textarea id='datosad' name='datosad' required>" . htmlspecialchars($row["datosad"]) . "</textarea>";
+        echo "</div>";
+        echo "<div class='input-group'>";
+        echo "    <label for='disponible'>Disponible:</label>";
+        echo "    <input type='checkbox' id='disponible' name='disponible'" . ($row['disponible'] ? " checked" : "") . ">";
+        echo "</div>";
+        echo "<input type='submit' value='Guardar Cambios' class='boton'>";
+        echo "<input type='submit' name='accion' value='Eliminar Propuesta' class='boton' onclick='return confirm(\"¿Estás seguro de que deseas eliminar esta propuesta?\");'>";
+        echo "</form>";
+    } else {
+        echo "<p>Propuesta no encontrada.</p>";
+    }
+    ?>
+</div>
 
 </body>
 </html>
