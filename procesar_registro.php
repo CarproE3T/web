@@ -43,11 +43,11 @@
 <div class="message-container">
     <?php
     // Conexión a la base de datos
-    $hostname = "127.0.0.1";
-    $port = 3307;
-    $username = "root";
-    $password = "4241640";
-    $database = "proyecto";
+    $hostname = "localhost";
+    $username = "id22374583_carproe3t";
+    $password = "carpro-E3T";
+    $database = "id22374583_proyecto";
+    $port = 21;
     $conn = new mysqli($hostname, $username, $password, $database, $port);
 
     if ($conn->connect_error) {
