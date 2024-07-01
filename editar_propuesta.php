@@ -2,11 +2,12 @@
 session_start();
 
 // Variables de conexión a la base de datos
-$hostname = "localhost";
-$username = "id22374583_carproe3t";
-$password = "carpro-E3T";
-$database = "id22374583_proyecto";
-$port = 21;
+
+$hostname = "viaduct.proxy.rlwy.net";
+$username = "root";
+$password = "MFdYmSkvfMkCeWhPjQuXfHGwgMzPcZRb";
+$database = "railway";
+$port = 49066;
 
 // Obtener el ID de la propuesta desde la URL
 $id = isset($_GET['id']) ? $_GET['id'] : null;
