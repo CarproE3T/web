@@ -80,11 +80,11 @@ function mostrarCrearPropuesta() {
 }
 
 function mostrarEditarPropuesta() {
-    $hostname = "localhost";
-    $username = "id22374583_carproe3t";
-    $password = "carpro-E3T";
-    $database = "id22374583_proyecto";
-    $port = 21;
+    $hostname = "viaduct.proxy.rlwy.net";
+    $username = "root";
+    $password = "MFdYmSkvfMkCeWhPjQuXfHGwgMzPcZRb";
+    $database = "railway";
+    $port = 49066;
     $conn = new mysqli($hostname, $username, $password, $database, $port);
 
     if ($conn->connect_error) {
@@ -111,11 +111,11 @@ function mostrarEditarPropuesta() {
 }
 
 function mostrarVerDisponibilidad() {
-    $hostname = "localhost";
-    $username = "id22374583_carproe3t";
-    $password = "carpro-E3T";
-    $database = "id22374583_proyecto";
-    $port = 21;
+    $hostname = "viaduct.proxy.rlwy.net";
+    $username = "root";
+    $password = "MFdYmSkvfMkCeWhPjQuXfHGwgMzPcZRb";
+    $database = "railway";
+    $port = 49066;
     $conn = new mysqli($hostname, $username, $password, $database, $port);
 
     $sql = "SELECT nombre_proyecto, disponible FROM proyectos";
