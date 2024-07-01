@@ -1,3 +1,76 @@
+<?php
+session_start();
+
+$usuarioValido = "usuario";
+$claveValida = "usuario123";
+$sesionIniciada = false;
+$mensajeError = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['usuario']) && isset($_POST['clave'])) {
+        $usuario = htmlspecialchars($_POST['usuario']);
+        $clave = htmlspecialchars($_POST['clave']);
+
+        if ($usuario === $usuarioValido && $clave === $claveValida) {
+            $_SESSION['sesionIniciada'] = true;
+            $sesionIniciada = true;
+        } else {
+            $mensajeError = "Usuario o contraseña incorrectos.";
+        }
+    }
+} elseif (isset($_SESSION['sesionIniciada']) && $_SESSION['sesionIniciada']) {
+    $sesionIniciada = true;
+}
+
+function mostrarFormularioLogin($mensajeError) {
+    echo "<!DOCTYPE html>";
+    echo "<html>";
+    echo "<head>";
+    echo "<title>Iniciar Sesión</title>";
+    echo "<style>";
+    echo "body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; background-color: #f0f0f0; }";
+    echo "h1 { color: #333; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); }";
+    echo "form { display: inline-block; }";
+    echo ".boton { background-color: green; color: white; padding: 10px 20px; margin: 10px 0; border: none; cursor: pointer; width: 150px; display: block; margin-left: auto; margin-right: auto; }";
+    echo "input[type='text'], input[type='password'] { margin: 10px 0; padding: 10px; width: 300px; }";
+    echo ".error { color: red; }";
+    echo "</style>";
+    echo "</head>";
+    echo "<body>";
+    echo "<h1>Iniciar Sesión</h1>";
+    if ($mensajeError != "") {
+        echo "<p class='error'>$mensajeError</p>";
+    }
+    echo "<form method='post'>";
+    echo "<input type='text' name='usuario' placeholder='Usuario'><br>";
+    echo "<input type='password' name='clave' placeholder='Contraseña'><br>";
+    echo "<input type='submit' value='Iniciar Sesión' class='boton'>";
+    echo "</form>";
+    echo "</body>";
+    echo "</html>";
+}
+
+if (!$sesionIniciada) {
+    mostrarFormularioLogin($mensajeError);
+    exit;
+}
+
+// Conexión a la base de datos
+$hostname = "localhost";
+$username = "id22374583_carproe3t";
+$password = "carpro-E3T";
+$database = "id22374583_proyecto";
+$port = 21;
+$conn = new mysqli($hostname, $username, $password, $database, $port);
+
+if ($conn->connect_error) {
+    die("Error en la conexión: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM proyectos";
+$result = $conn->query($sql);
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,56 +79,83 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            padding-top: 100px;
+            padding-top: 50px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
         }
         table {
             margin-left: auto;
             margin-right: auto;
-            border-collapse: collapse; /* Asegura que no haya espacios entre las celdas */
-            width: 80%; /* O el ancho que prefieras */
+            border-collapse: collapse;
+            width: 80%;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
         }
         th, td {
-            border: 1px solid #ddd; /* Añade bordes a las celdas */
-            padding: 8px; /* Espaciado interno de las celdas */
+            border: 1px solid #ddd;
+            padding: 12px;
         }
         th {
-            background-color: #4CAF50; /* Color de fondo para los encabezados */
-            color: white; /* Color del texto para los encabezados */
-            white-space: nowrap; /* Asegura que el texto del encabezado no se envuelva */
+            background-color: #4CAF50;
+            color: white;
+            white-space: nowrap;
         }
-        tr:nth-child(even){background-color: #f2f2f2;} /* Colores alternos para las filas */
-        tr:hover {background-color: #ddd;} /* Cambia el fondo al pasar el mouse */
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
         .boton {
             background-color: green;
             color: white;
             padding: 10px 20px;
-            margin: 10px 0;
+            margin: 20px 0;
             border: none;
             cursor: pointer;
-            width: 150px;
+            width: 200px;
             display: block;
             margin-left: auto;
             margin-right: auto;
+            font-size: 1em;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .boton:hover {
+            background-color: darkgreen;
+            transform: translateY(-5px);
         }
         input[type="text"], input[type="password"] {
             margin: 10px 0;
             padding: 10px;
             width: 300px;
-        }
-        h1 {
-            color: black;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         }
         .error {
             color: red;
         }
-        
+        .boton[disabled] {
+            background-color: grey;
+            cursor: not-allowed;
+        }
+        .volver {
+            background-color: #555;
+        }
     </style>
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
         function mostrarMensaje(emailLink) {
             Swal.fire({
                 title: 'Confirmación',
-                text: "El siguiente correo es un modelo que puede seguir para mostrar su interés en el proyecto, pero usted puede modificarlo a su antojo(Recuerde que tiene mas informacion de contacto del proponente del proyecto).",
+                text: "El siguiente correo es un modelo que puede seguir para mostrar su interés en el proyecto, pero usted puede modificarlo a su antojo (Recuerde que tiene más información de contacto del proponente del proyecto).",
                 icon: 'info',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -72,61 +172,6 @@
 </head>
 <body>
 <?php
-session_start();
-
-$usuarioValido = "usuario";
-$claveValida = "usuario123";
-$sesionIniciada = false;
-$mensajeError = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['usuario']) && isset($_POST['clave'])) {
-        $usuario = $_POST['usuario'];
-        $clave = $_POST['clave'];
-
-        if ($usuario === $usuarioValido && $clave === $claveValida) {
-            $_SESSION['sesionIniciada'] = true;
-            $sesionIniciada = true;
-        } else {
-            $mensajeError = "Usuario o contraseña incorrectos.";
-        }
-    }
-} elseif (isset($_SESSION['sesionIniciada']) && $_SESSION['sesionIniciada']) {
-    $sesionIniciada = true;
-}
-
-function mostrarFormularioLogin($mensajeError) {
-    echo "<h1>Iniciar Sesión</h1>";
-    if ($mensajeError != "") {
-        echo "<p class='error'>$mensajeError</p>";
-    }
-    echo "<form method='post'>";
-    echo "<input type='text' name='usuario' placeholder='Usuario'><br>";
-    echo "<input type='password' name='clave' placeholder='Contraseña'><br>";
-    echo "<input type='submit' value='Iniciar Sesión' class='boton'>";
-    echo "</form>";
-}
-
-if (!$sesionIniciada) {
-    mostrarFormularioLogin($mensajeError);
-    exit;
-}
-
-// Conexión a la base de datos
-$hostname = "127.0.0.1";
-$port = 3307;
-$username = "root";
-$password = "4241640";
-$database = "proyecto";
-$conn = new mysqli($hostname, $username, $password, $database, $port);
-
-if ($conn->connect_error) {
-    die("Error en la conexión: " . $conn->connect_error);
-}
-
-$sql = "SELECT * FROM proyectos";
-$result = $conn->query($sql);
-
 if ($result->num_rows > 0) {
     echo "<h1>Propuestas Disponibles</h1>";
     echo "<table>";
@@ -159,19 +204,8 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 
-echo "<a href='index.php' class='boton'>Volver a la Página de Inicio</a>";
+echo "<a href='index.php' class='boton volver'>Volver a la Página de Inicio</a>";
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Estudiante - Visualización de Propuestas</title>
-    <style>
-        /* Tus estilos aquí */
-    </style>
-</head>
-<body>
-<!-- El cuerpo de tu página aquí -->
 </body>
 </html>
 
