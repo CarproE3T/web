@@ -1,6 +1,6 @@
 <?php
-$hostname = "127.0.0.1";
+$hostname = "viaduct.proxy.rlwy.net";
 $username = "root";
-$password = "4241640";
-$database = "proyecto";
-$port = 3307;
+$password = "MFdYmSkvfMkCeWhPjQuXfHGwgMzPcZRb";
+$database = "railway";
+$port = 49066;
