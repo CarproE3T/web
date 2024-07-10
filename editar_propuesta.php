@@ -2,12 +2,11 @@
 session_start();
 
 // Variables de conexión a la base de datos
-
-$hostname = "viaduct.proxy.rlwy.net";
+$hostname = "monorail.proxy.rlwy.net";
 $username = "root";
-$password = "MFdYmSkvfMkCeWhPjQuXfHGwgMzPcZRb";
-$database = "railway";
-$port = 49066;
+$password = "nvKULvnVnNuzhZZkxEpgIEtqcDpvakFq";
+$database = "carpro";
+$port = 46038;
 
 // Obtener el ID de la propuesta desde la URL
 $id = isset($_GET['id']) ? $_GET['id'] : null;
@@ -165,3 +164,4 @@ $result = $conn->query($sql);
 
 </body>
 </html>
+
