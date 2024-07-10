@@ -56,11 +56,11 @@ if (!$sesionIniciada) {
 }
 
 // Conexión a la base de datos
-$hostname = "viaduct.proxy.rlwy.net";
+$hostname = "monorail.proxy.rlwy.net";
 $username = "root";
-$password = "MFdYmSkvfMkCeWhPjQuXfHGwgMzPcZRb";
-$database = "railway";
-$port = 49066;;
+$password = "nvKULvnVnNuzhZZkxEpgIEtqcDpvakFq";
+$database = "carpro";
+$port = 46038;
 $conn = new mysqli($hostname, $username, $password, $database, $port);
 
 if ($conn->connect_error) {
