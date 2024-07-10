@@ -1,6 +1,8 @@
 <?php
-$hostname = "viaduct.proxy.rlwy.net";
+$hostname = "monorail.proxy.rlwy";
 $username = "root";
-$password = "MFdYmSkvfMkCeWhPjQuXfHGwgMzPcZRb";
-$database = "railway";
-$port = 49066;
+$password = "nvKULvnVnNuzhZZkxEpgIEtqcDpvakFq";
+$database = "carpro";
+$port = 46038;
+
+mysql://root:nvKULvnVnNuzhZZkxEpgIEtqcDpvakFq@monorail.proxy.rlwy.net:46038/railway
