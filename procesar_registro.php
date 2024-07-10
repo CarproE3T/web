@@ -43,11 +43,11 @@
 <div class="message-container">
     <?php
     // Conexión a la base de datos
-    $hostname = "localhost";
-    $username = "id22374583_carproe3t";
-    $password = "carpro-E3T";
-    $database = "id22374583_proyecto";
-    $port = 21;
+    $hostname = "monorail.proxy.rlwy.net";
+    $username = "root";
+    $password = "nvKULvnVnNuzhZZkxEpgIEtqcDpvakFq";
+    $database = "carpro";
+    $port = 46038;
     $conn = new mysqli($hostname, $username, $password, $database, $port);
 
     if ($conn->connect_error) {
